@@ -1,0 +1,96 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </head>
+    <style>
+        pre {
+           overflow-x: auto;
+           white-space: pre-wrap;
+           white-space: -moz-pre-wrap;
+           white-space: -pre-wrap;
+           white-space: -o-pre-wrap;
+           word-wrap: break-word;
+        }
+     </style>
+
+
+
+<!--table>
+    <tr>
+        <th>Number of Connections</th>
+        <th>IP Address</th>
+    </tr>
+
+    <tbody id="myTable">
+        
+    </tbody>
+</table-->
+
+
+<pre id="finJson">{{metricsData}}
+</pre>
+
+
+<script>
+	var myArray = []
+    // [{"Number of Connections": 1225, "IP Address": " 103.116.32.2"}, {"Number of Connections": 677, "IP Address": " 163.53.79.51"}, {"Number of Connections": 651, "IP Address": " 103.116.32.30"}, {"Number of Connections": 174, "IP Address": " 103.116.32.1"}, {"Number of Connections": 40, "IP Address": " 10.6.27.6"}, {"Number of Connections": 36, "IP Address": " 184.26.162.104"}, {"Number of Connections": 35, "IP Address": " 184.26.162.97"}, {"Number of Connections": 27, "IP Address": " 10.57.10.88"}, {"Number of Connections": 24, "IP Address": " 172.16.59.56"}, {"Number of Connections": 22, "IP Address": " 8.8.4.4"}]
+
+    // buildTable(myArray)
+
+    // $.ajax({
+    //     method: 'GET',
+    //     url: 'https://reqres.in/api/users',
+    //     success:function(response){
+    //         myArray = response.data
+    //         buildTable(myArray)
+    //         console.log(myArray)
+    //     }
+    
+    // $.ajax({
+    //     method: 'GET',
+    //     url: "http://127.0.0.1:5000/metrics/destipOut",
+    //     success:function(response){
+    //         // myArray = response
+    //         // buildTable(response)
+    //         console.log(response)
+    //         $('#finJson').html(response);
+    //     }
+    // })
+    myArray=$.getJSON("http://127.0.0.1:5000/metrics/destipOut", function() {
+  console.log( "success" );
+})
+	//function buildTable(data){
+        
+
+
+	// 	var table = document.getElementById('myTable')
+        
+	// for (var i = 0; i < data.length; i++){
+	// 	var row = `<tr>
+	// 					<td>${data[i].NumberofConnections}</td>
+	// 					<td>${data[i].IPAddess}</td>
+	// 			  </tr>`
+	// 	table.innerHTML += row
+
+
+	//	}
+	//}
+
+    // function buildTable(data){
+	// 	var table = document.getElementById('myTable')
+
+	// 	for (var i = 0; i < data.length; i++){
+	// 		var row = `<tr>
+	// 						<td>${data[i].first_name}</td>
+	// 						<td>${data[i].last_name}</td>
+    //                         <td>${data[i].email}</td>
+	// 				  </tr>`
+	// 		table.innerHTML += row
+
+
+	// 	}
+	// }
+
+
+</script>
+</html>

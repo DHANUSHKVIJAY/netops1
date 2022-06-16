@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>SRX</title>
+    <style>
+        
+        h2 {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            align-items: center;
+            text-align: center;
+        }
+
+        h2:before,
+        h2:after {
+            content: '';
+            border-top: 2px solid;
+            margin: 0 20px 0 0;
+            flex: 1 0 20px;
+        }
+
+        h2:after {
+            margin: 0 0 0 20px;
+        }
+
+        /* env */
+        body {
+            background: linear-gradient(#A0BAF7, #4CACC1);
+            min-height: 100vh;
+        }
+
+        h2 {
+            margin: 30px 0;
+            font: 700 2em/1.4 'Avenir', sans-serif;
+            color: #FFF;
+        }
+        button {
+            display: inline-block;
+            padding: 5px 15px;
+            font-size: 20px;
+            cursor: pointer;
+            text-align: center;
+            color: rgb(0, 0, 0);
+            border-radius: 10px;
+            box-shadow: 0 5px #999;
+        }
+        button:active {
+            background-color: hsl(88, 100%, 50%);
+            transform: translateY(4px);
+        }
+        button:hover
+        {
+            background-color:rgb(142, 142, 142);
+        }
+        button:focus
+        {
+            background-color:rgb(26, 212, 241);
+        }
+        div
+        {
+          text-align:center;
+        }
+        .dropbtn {
+          background-color: #ffffff;
+          color: #2f65e3;
+          padding: 16px;
+          font-size: 16px;
+          font-family: 'Comic Sans MS';
+          border: none;
+        }
+
+        /* The container <div> - needed to position the dropdown content */
+        .dropdown {
+          position: relative;
+          display: inline-block;
+        }
+
+        /* Dropdown Content (Hidden by Default) */
+        .dropdown-content {
+          display: none;
+          position: absolute;
+          background-color: #f1f1f1;
+          min-width: 160px;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          z-index: 1;
+        }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+          color: black;
+          padding: 12px 16px;
+          text-decoration: none;
+          display: block;
+        }
+
+        /* Change color of dropdown links on hover */
+        .dropdown-content a:hover {background-color: #ddd;}
+
+        /* Show the dropdown menu on hover */
+        .dropdown:hover .dropdown-content {display: block;}
+
+        /* Change the background color of the dropdown button when the dropdown content is shown */
+        .dropdown:hover .dropbtn {background-color: #949494;}
+
+    </style>
+        
+    </head>
+    <h2>SRX SESSION ANALYZER</h2>
+    <h2>Upload session</h2>
+    <body>
+    <div>
+    <form enctype = "multipart/form-data" onsubmit="false;" ><br>
+    <h3>Select a Session Log Text file</h3>
+    <br><br>
+    <input id="file" type="file" name="static_file" accept=".txt"/><br><br><br><br>
+    <button id="upload-button" onclick="uploadFile(this.form);"> Upload</button>
+    </form>
+    
+    <!-- <h2><button onclick="myFunc()">Top Talkers</button></h2> -->
+    <h2>
+      <div class="dropdown">
+        <button class="dropbtn">Top Talkers</button>
+        <div class="dropdown-content">
+          <a href="http://127.0.0.1:5000/metricstest">Top 10</a>
+          <a href="http://127.0.0.1:5000/metricsall">ALL</a>
+        </div>
+      </div>
+    </h2>
+    <script>
+      
+    </script>
+    
+    <!--script to redirect to another webpage-->
+    <!-- <script>
+      function myFunc() {
+        window.location.href = "http://127.0.0.1:5000/metricstest";
+      }
+      
+    </script> -->
+  </div>
+  <div id="static_file_response"> </div>
+
+  <script type="text/javascript" src="/static/app.js"></script>
+  </script>
+</body>
+</html>

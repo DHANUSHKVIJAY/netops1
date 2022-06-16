@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/datatables/datatables.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/jquery.dataTables.min.js"></script>
+	<script src="js/datatables/datatables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <title>SRX</title>
+    <style>
+        th, td, p, input, h3 {
+            font:18px 'Comic Sans MS';
+        }
+        table, th, td {
+            border: solid 1px #ddd;
+            border-collapse: collapse;
+            padding: 2px 3px;
+            text-align: center;
+        }
+        tr:nth-child(even) {
+            background-color: #D6EEEE;
+        }
+        th {
+            font-weight:bold;
+            background-color: #11c9e1c9;
+        }
+        pre {
+           overflow-x: auto;
+           white-space: pre-wrap;
+           white-space: -moz-pre-wrap;
+           white-space: -pre-wrap;
+           white-space: -o-pre-wrap;
+           word-wrap: break-word;
+           line-height: 2;
+        }
+        
+        h2 {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            align-items: center;
+            text-align: center;
+        }
+
+        h2:before,
+        h2:after {
+            content: '';
+            border-top: 2px solid;
+            margin: 0 20px 0 0;
+            flex: 1 0 20px;
+        }
+
+        h2:after {
+            margin: 0 0 0 20px;
+        }
+
+        /* env */
+        body {
+            background: linear-gradient(#A0BAF7, #4CACC1);
+            min-height: 100vh;
+        }
+
+        h2 {
+            margin: 30px 0;
+            font: 700 2em/1.4 'Avenir', sans-serif;
+            color: #FFF;
+        }
+        button {
+            display: inline-block;
+            padding: 5px 15px;
+            font-size: 20px;
+            cursor: pointer;
+            text-align: center;
+            color: rgb(0, 0, 0);
+            border-radius: 10px;
+            box-shadow: 0 5px #999;
+        }
+        button:active {
+            background-color: hsl(88, 100%, 50%);
+            transform: translateY(4px);
+        }
+        button:hover
+        {
+            background-color:rgb(142, 142, 142);
+        }
+        button:focus
+        {
+            background-color:rgb(26, 212, 241);
+        }
+        div
+        {
+          text-align:center;
+        }
+
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src = "https://code.highcharts.com/highcharts.js"></script> 
+</head>
+<h2>SRX SESSION ANALYZER</h2>
+
+<h2>TOP TALKERS</h2>
+<body>
+    
+    <!-- <label for="nos">Number of Results</label>
+    <select name="nos" id="nos">
+        <option value="10">10</option>
+        <option value="all">ALL</option>
+    </select> -->
+    
+
+	<div>
+        <button type='button' onclick='srcIpTable()' value='Source IP Addresses'>Source IP Addresses</button> 
+        <button type='button' onclick='destIpTable()' value='Destination IP Addresses'>Destination IP Addresses</button>
+        <button type='button' onclick='srcPortTable()' value='Source Port'>Source Port</button><br>
+        <button type='button' onclick='destPortTable()' value='Destination Port'>Destination Port</button>
+        <button type='button' onclick='protoTable()' value='Protocols'>Protocols</button>   
+        <button type='button' onclick='policyTable()' value='Policies'>Policies</button><br>
+        <button type='button' onclick='interfaceTable()' value='Interface'>Interface</button>
+        <button type='button' onclick='packetsTable()' value='Packets'>Packets</button>
+        <button type='button' onclick='bytesTable()' value='Bytes'>Bytes</button>
+        <br>   
+    </div>
+    <br><br><br><br>
+    <table id='showData' style="border:1px solid black; margin-left:auto;margin-right:auto;"></table>
+    <!-- <canvas id="myChart" style="width:100%;max-width:700px; margin-left:auto;margin-right:auto;"></canvas> -->
+    <p id='msg'></p>
+</body>
+
+<script>
+	// scroll down for ES6 features. 
+    function srcIpTable(){
+        var tableVal = []
+        tableVal=$.getJSON("http://127.0.0.1:5000/metrics/srcipOutall",function() {
+        console.log(tableVal.responseJSON);
+        finTable=tableVal.responseJSON
+        //console.log(finBooks)
+        tableFromJson(finTable)
+
+
+    })}
+    function destIpTable(){
+        var tableVal = []
+        tableVal=$.getJSON("http://127.0.0.1:5000/metrics/dstipOutall",function() {
+        console.log(tableVal.responseJSON);
+        finTable=tableVal.responseJSON
+        //console.log(finBooks)
+        tableFromJson(finTable)
+        
+    })}
+    function srcPortTable(){
+        var tableVal = []
+        tableVal=$.getJSON("http://127.0.0.1:5000/metrics/srcportOutall",function() {
+        console.log(tableVal.responseJSON);
+        finTable=tableVal.responseJSON
+        //console.log(finBooks)
+        tableFromJson(finTable)
+    })}
+    function destPortTable(){
+        var tableVal = []
+        tableVal=$.getJSON("http://127.0.0.1:5000/metrics/dstportOutall",function() {
+        console.log(tableVal.responseJSON);
+        finTable=tableVal.responseJSON
+        //console.log(finBooks)
+        tableFromJson(finTable)
+    })}
+    function protoTable(){
+        var tableVal = []
+        tableVal=$.getJSON("http://127.0.0.1:5000/metrics/protoOutall",function() {
+        console.log(tableVal.responseJSON);
+        finTable=tableVal.responseJSON
+        //console.log(finBooks)
+        tableFromJson(finTable)
+    })}
+    function policyTable(){
+        var tableVal = []
+        tableVal=$.getJSON("http://127.0.0.1:5000/metrics/policyOutall",function() {
+        console.log(tableVal.responseJSON);
+        finTable=tableVal.responseJSON
+        //console.log(finBooks)
+        tableFromJson(finTable)
+    })}
+    function interfaceTable(){
+        var tableVal = []
+        tableVal=$.getJSON("http://127.0.0.1:5000/metrics/interfaceOutall",function() {
+        console.log(tableVal.responseJSON);
+        finTable=tableVal.responseJSON
+        //console.log(finBooks)
+        tableFromJson(finTable)
+    })}
+    function packetsTable(){
+        var tableVal = []
+        tableVal=$.getJSON("http://127.0.0.1:5000/metrics/packetsOutall",function() {
+        console.log(tableVal.responseJSON);
+        finTable=tableVal.responseJSON
+        //console.log(finBooks)
+        tableFromJson(finTable)
+    })}
+    function bytesTable(){
+        var tableVal = []
+        tableVal=$.getJSON("http://127.0.0.1:5000/metrics/bytesOutall",function() {
+        console.log(tableVal.responseJSON);
+        finTable=tableVal.responseJSON
+        //console.log(finBooks)
+        tableFromJson(finTable)
+    })}
+
+
+    var myChart = new Chart("myChart", {
+        type: "bar",
+        data: {},
+        options: {}
+    });
+
+
+    function tableFromJson(finTable) {
+		// the json data. (you can change the values for output.)
+        //var myBooks = 
+        //    [{"Number of Connections": 266, "IP Address": " 10.56.23.84"}, {"Number of Connections": 221, "IP Address": " 10.56.23.85"}, {"Number of Connections": 190, "IP Address": " 10.56.23.81"}, {"Number of Connections": 74, "IP Address": " 192.168.13.1"}, {"Number of Connections": 72, "IP Address": " 10.57.10.90"}, {"Number of Connections": 55, "IP Address": " 162.158.235.52"}, {"Number of Connections": 54, "IP Address": " 162.158.227.239"}, {"Number of Connections": 47, "IP Address": " 172.70.218.149"}, {"Number of Connections": 38, "IP Address": " 172.68.79.159"}, {"Number of Connections": 36, "IP Address": " 172.70.218.229"}]
+
+        // Extract value from table header. 
+        // ('Book ID', 'Book Name', 'Category' and 'Price')
+        
+        //[{"Number of Connections": 266, "IP Address": " 10.56.23.84"}, {"Number of Connections": 221, "IP Address": " 10.56.23.85"}, {"Number of Connections": 190, "IP Address": " 10.56.23.81"}, {"Number of Connections": 74, "IP Address": " 192.168.13.1"}, {"Number of Connections": 72, "IP Address": " 10.57.10.90"}, {"Number of Connections": 55, "IP Address": " 162.158.235.52"}, {"Number of Connections": 54, "IP Address": " 162.158.227.239"}, {"Number of Connections": 47, "IP Address": " 172.70.218.149"}, {"Number of Connections": 38, "IP Address": " 172.68.79.159"}, {"Number of Connections": 36, "IP Address": " 172.70.218.229"}]
+
+
+        
+        
+
+
+        var col = [];
+        for (var i = 0; i < finTable.length; i++) {
+            for (var key in finTable[i]) {
+                if (col.indexOf(key) === -1) {
+                    col.push(key);
+                }
+            }
+        }
+
+        // Create a table.
+        var table = document.createElement("table");
+        //table.setAttribute('id','example')
+        //table.setAttribute('class','display')
+        // Create table header row using the extracted headers above.
+        var tr = table.insertRow(-1);                   // table row.
+
+        for (var i = 0; i < col.length; i++) {
+            var th = document.createElement("th");      // table header.
+            th.innerHTML = col[i];
+            tr.appendChild(th);
+        }
+
+        // add json data to the table as rows.
+        for (var i = 0; i < finTable.length; i++) {
+
+            tr = table.insertRow(-1);
+
+            for (var j = 0; j < col.length; j++) {
+                var tabCell = tr.insertCell(-1);
+                tabCell.innerHTML = finTable[i][col[j]];
+            }
+        }
+
+        // Now, add the newly created table with json data, to a container.
+        var divShowData = document.getElementById('showData');
+        divShowData.innerHTML = "";
+        divShowData.appendChild(table);
+        
+    }
+
+    
+</script>
+
+</html>
